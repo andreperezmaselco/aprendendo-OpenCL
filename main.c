@@ -143,13 +143,10 @@ void freeOpenCLPlatforms(Set *platforms) {
     free(platforms->elements);
 }
 
-int main(int argc, char **argv) {
-    Set platforms;
-    allocOpenCLPlatforms(&platforms);
-
+void printOpenCLInfo(Set *platforms) {
     for (
-        OpenCLPlatform *platform = platforms.elements;
-        platform <= (OpenCLPlatform *)platforms.elements + platforms.cardinality - 1;
+        OpenCLPlatform *platform = platforms->elements;
+        platform <= (OpenCLPlatform *)platforms->elements + platforms->cardinality - 1;
         platform++
     ) {
         puts("OpenCL platforms:");
@@ -188,7 +185,12 @@ int main(int argc, char **argv) {
             printf("        type: %s\n", deviceType);
         }
     }
+}
 
+int main(int argc, char **argv) {
+    Set platforms;
+    allocOpenCLPlatforms(&platforms);
+    printOpenCLInfo(&platforms);
     freeOpenCLPlatforms(&platforms);
     return 0;
 }
