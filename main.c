@@ -44,23 +44,23 @@ void allocOpenCLDevices(OpenCLPlatform *platform) {
     ) {
         device->id = device_ids[device - (OpenCLDevice *)devices->elements];
 
-        // Obtém o nome do dispositivo.
+        // Gets the device name.
         size_t param_value_size;
         clGetDeviceInfo(device->id, CL_DEVICE_NAME, 0, NULL, &param_value_size);
         device->name = malloc(param_value_size);
         clGetDeviceInfo(device->id, CL_DEVICE_NAME, param_value_size, device->name, NULL);
 
-        // Obtém o vendor do dispositivo.
+        // Gets the device vendor.
         clGetDeviceInfo(device->id, CL_DEVICE_VENDOR, 0, NULL, &param_value_size);
         device->vendor = malloc(param_value_size);
         clGetDeviceInfo(device->id, CL_DEVICE_VENDOR, param_value_size, device->vendor, NULL);
 
-        // Obtém o perfil do dispositivo.
+        // Gets the device profile.
         clGetDeviceInfo(device->id, CL_DEVICE_PROFILE, 0, NULL, &param_value_size);
         device->profile = malloc(param_value_size);
         clGetDeviceInfo(device->id, CL_DEVICE_PROFILE, param_value_size, device->profile, NULL);
 
-        // Obtém o tipo do dispositivo.
+        // Gets the device type.
         clGetDeviceInfo(device->id, CL_DEVICE_TYPE, 0, NULL, &param_value_size);
         clGetDeviceInfo(device->id, CL_DEVICE_TYPE, param_value_size, &device->type, NULL);
     }
@@ -99,28 +99,28 @@ void allocOpenCLPlatforms(Set *platforms) {
     ) {
         platform->id = platform_ids[platform - (OpenCLPlatform *)platforms->elements];
 
-        // Obtém o nome da plataforma.
+        // Gets the platform name.
         size_t param_value_size;
         clGetPlatformInfo(platform->id, CL_PLATFORM_NAME, 0, NULL, &param_value_size);
         platform->name = malloc(param_value_size);
         clGetPlatformInfo(platform->id, CL_PLATFORM_NAME, param_value_size, platform->name, NULL);
 
-        // Obtém o vendor da plataforma.
+        // Gets the platform vendor.
         clGetPlatformInfo(platform->id, CL_PLATFORM_VENDOR, 0, NULL, &param_value_size);
         platform->vendor = malloc(param_value_size);
         clGetPlatformInfo(platform->id, CL_PLATFORM_VENDOR, param_value_size, platform->vendor, NULL);
 
-        // Obtém o perfil da plataforma.
+        // Gets the platform profile.
         clGetPlatformInfo(platform->id, CL_PLATFORM_PROFILE, 0, NULL, &param_value_size);
         platform->profile = malloc(param_value_size);
         clGetPlatformInfo(platform->id, CL_PLATFORM_PROFILE, param_value_size, platform->profile, NULL);
 
-        // Obtém as extensões da plataforma.
+        // Gets the platform extensions.
         clGetPlatformInfo(platform->id, CL_PLATFORM_EXTENSIONS, 0, NULL, &param_value_size);
         platform->extensions = malloc(param_value_size);
         clGetPlatformInfo(platform->id, CL_PLATFORM_EXTENSIONS, param_value_size, platform->extensions, NULL);
 
-        // Obtém os dispositivos da plataforma.
+        // Gets the platform devices.
         allocOpenCLDevices(platform);
     }
 
