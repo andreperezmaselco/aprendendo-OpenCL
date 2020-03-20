@@ -1,7 +1,8 @@
 #ifndef MATHEMATICS_VECTOR_H
 #define MATHEMATICS_VECTOR_H
 
-#include <stdio.h>
+// C Library
+#include <stddef.h>
 
 typedef struct Vector
 {
