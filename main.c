@@ -72,7 +72,8 @@ void allocOpenCLDevices(OpenCLPlatform *platform) {
 }
 
 void freeOpenCLDevices(Set *devices) {
-    if (devices == NULL)
+    if (devices == NULL ||
+        devices->elements == NULL)
         return;
 
     for (
@@ -137,7 +138,8 @@ void allocOpenCLPlatforms(Set *platforms) {
 }
 
 void freeOpenCLPlatforms(Set *platforms) {
-    if (platforms == NULL)
+    if (platforms == NULL ||
+        platforms->elements == NULL)
         return;
 
     for (
@@ -156,7 +158,8 @@ void freeOpenCLPlatforms(Set *platforms) {
 }
 
 void printOpenCLInfo(Set *platforms) {
-    if (platforms == NULL) {
+    if (platforms == NULL ||
+        platforms->elements == NULL) {
         puts("No OpenCL platforms allocated.");
         return;
     }
@@ -172,7 +175,8 @@ void printOpenCLInfo(Set *platforms) {
         printf("    profile: %s\n", platform->profile);
 
         Set *devices = &platform->devices;
-        if (devices == NULL) {
+        if (devices == NULL ||
+            devices->elements == NULL) {
             puts("    devices: (null)");
             continue;
         }
