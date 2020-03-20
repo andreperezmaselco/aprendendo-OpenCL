@@ -27,6 +27,9 @@ typedef struct OpenCLDevice {
 } OpenCLDevice;
 
 void allocOpenCLDevices(OpenCLPlatform *platform) {
+    if (platform == NULL)
+        return;
+
     cl_uint num_devices;
     clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, 0, NULL, &num_devices);
 
@@ -69,6 +72,9 @@ void allocOpenCLDevices(OpenCLPlatform *platform) {
 }
 
 void freeOpenCLDevices(Set *devices) {
+    if (devices == NULL)
+        return;
+
     for (
         OpenCLDevice *device = devices->elements;
         device <= (OpenCLDevice *)devices->elements + devices->cardinality - 1;
@@ -83,6 +89,9 @@ void freeOpenCLDevices(Set *devices) {
 }
 
 void allocOpenCLPlatforms(Set *platforms) {
+    if (platforms == NULL)
+        return;
+
     cl_uint num_platforms;
     clGetPlatformIDs(0, NULL, &num_platforms);
 
@@ -128,6 +137,9 @@ void allocOpenCLPlatforms(Set *platforms) {
 }
 
 void freeOpenCLPlatforms(Set *platforms) {
+    if (platforms == NULL)
+        return;
+
     for (
         OpenCLPlatform *platform = platforms->elements;
         platform <= (OpenCLPlatform *)platforms->elements + platforms->cardinality - 1;
@@ -144,6 +156,11 @@ void freeOpenCLPlatforms(Set *platforms) {
 }
 
 void printOpenCLInfo(Set *platforms) {
+    if (platforms == NULL) {
+        puts("No OpenCL platforms allocated.");
+        return;
+    }
+
     for (
         OpenCLPlatform *platform = platforms->elements;
         platform <= (OpenCLPlatform *)platforms->elements + platforms->cardinality - 1;
@@ -153,9 +170,14 @@ void printOpenCLInfo(Set *platforms) {
         printf("    name: %s\n", platform->name);
         printf("    vendor: %s\n", platform->vendor);
         printf("    profile: %s\n", platform->profile);
-        puts("    devices:");
 
         Set *devices = &platform->devices;
+        if (devices == NULL) {
+            puts("    devices: (null)");
+            continue;
+        }
+
+        puts("    devices:");
         for (
             OpenCLDevice *device = devices->elements;
             device <= (OpenCLDevice *)devices->elements + devices->cardinality - 1;
@@ -165,8 +187,7 @@ void printOpenCLInfo(Set *platforms) {
             printf("        vendor: %s\n", device->vendor);
             printf("        profile: %s\n", device->profile);
             char *deviceType;
-            switch (device->type)
-            {
+            switch (device->type) {
                 case CL_DEVICE_TYPE_DEFAULT:
                     deviceType = "DEFAULT";
                     break;
