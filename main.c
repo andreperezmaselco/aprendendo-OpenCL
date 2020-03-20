@@ -156,6 +156,7 @@ int main(int argc, char **argv) {
         printf("    name: %s\n", platform->name);
         printf("    vendor: %s\n", platform->vendor);
         printf("    profile: %s\n", platform->profile);
+        puts("    devices:");
 
         Set *devices = &platform->devices;
         for (
@@ -163,7 +164,6 @@ int main(int argc, char **argv) {
             device <= (OpenCLDevice *)devices->elements + devices->cardinality - 1;
             device++
         ) {
-            puts("    devices:");
             printf("        name: %s\n", device->name);
             printf("        vendor: %s\n", device->vendor);
             printf("        profile: %s\n", device->profile);
