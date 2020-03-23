@@ -33,6 +33,10 @@ void allocOpenCLDevices(OpenCLPlatform *platform) {
     cl_uint num_devices;
     clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, 0, NULL, &num_devices);
 
+    // If there are no devices, then return.
+    if (num_devices == 0)
+        return;
+
     cl_device_id *device_ids = calloc(num_devices, sizeof(cl_device_id));
     clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, num_devices, device_ids, NULL);
 
@@ -95,6 +99,10 @@ void allocOpenCLPlatforms(Set *platforms) {
 
     cl_uint num_platforms;
     clGetPlatformIDs(0, NULL, &num_platforms);
+
+    // If there are no platforms, then return.
+    if (num_platforms == 0)
+        return;
 
     cl_platform_id *platform_ids = calloc(num_platforms, sizeof(cl_platform_id));
     clGetPlatformIDs(num_platforms, platform_ids, NULL);
