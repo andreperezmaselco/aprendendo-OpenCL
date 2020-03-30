@@ -15,8 +15,15 @@ void *getOpenCLPlatformInfo(
 ) {
     size_t param_value_size;
     cl_int error = clGetPlatformInfo(platform_id, platform_info, 0, NULL, &param_value_size);
+
+    // If 'clGetPlatformInfo' was not executed
+    // successfully, then return.
+    if (error != CL_SUCCESS) return NULL;
+
     void *param_value = malloc(param_value_size);
     error = clGetPlatformInfo(platform_id, platform_info, param_value_size, param_value, NULL);
+    if (error != CL_SUCCESS) return NULL;
+
     return param_value;
 }
 
