@@ -7,18 +7,16 @@
 #include "mathematics/set.h"
 
 typedef struct OpenCLPlatform {
-    cl_platform_id id;
-    cl_char *name;
-    cl_char *vendor;
-    cl_char *profile;
-    cl_char *extensions;
-    Set devices;
+  cl_platform_id id;
+  cl_char *name;
+  cl_char *vendor;
+  cl_char *profile;
+  cl_char *extensions;
+  Set devices;
 } OpenCLPlatform;
 
-void *getOpenCLPlatformInfo(
-    cl_platform_id platform_id,
-    cl_platform_info platform_info
-);
+void *getOpenCLPlatformInfo(cl_platform_id platform_id,
+                            cl_platform_info platform_info);
 
 void allocOpenCLPlatforms(Set *platforms);
 

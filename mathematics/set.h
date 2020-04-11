@@ -4,10 +4,9 @@
 // C Library
 #include <stddef.h>
 
-typedef struct Set
-{
-    size_t cardinality;
-    void *elements;
+typedef struct Set {
+  size_t cardinality;
+  void *elements;
 } Set;
 
 #endif
