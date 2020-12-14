@@ -88,10 +88,10 @@ void printOpenCLInfo(Set *platforms) {
     return;
   }
 
+  puts("OpenCL platforms:");
   for (OpenCLPlatform *platform = platforms->elements;
        platform < (OpenCLPlatform *)platforms->elements + platforms->cardinality;
        platform++) {
-    puts("OpenCL platforms:");
     printf("    name: %s\n", platform->name);
     printf("    vendor: %s\n", platform->vendor);
     printf("    profile: %s\n", platform->profile);
