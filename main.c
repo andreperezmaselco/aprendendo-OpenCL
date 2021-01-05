@@ -1,7 +1,7 @@
 #include "mathematics/set.h"
 #include "OpenCL/platform.h"
 
-int main(const int argc, const char *const *const argv) {
+int main(int argc, char *argv[]) {
   Set platforms;
   allocOpenCLPlatforms(&platforms);
   printOpenCLInfo(&platforms);
