@@ -1,6 +1,6 @@
 # Learning OpenCL
 
-This is a learning project. For now, it prints information about available OpenCL platforms and their devices.
+This is a project to learn [OpenCL specifications](https://www.khronos.org/registry/OpenCL). For now, it prints information about available OpenCL platforms and their devices.
 
 ## Build
 
