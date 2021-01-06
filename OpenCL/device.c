@@ -40,7 +40,7 @@ void allocOpenCLDevices(OpenCLPlatform *platform) {
     return;
   }
 
-  cl_device_id *device_ids = calloc(num_devices, sizeof(cl_device_id));
+  cl_device_id device_ids[num_devices];
   clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, num_devices, device_ids, NULL);
 
   Set *devices = &platform->devices;
@@ -58,8 +58,6 @@ void allocOpenCLDevices(OpenCLPlatform *platform) {
     device->type = *device_type;
     free(device_type);
   }
-
-  free(device_ids);
 }
 
 void freeOpenCLDevices(Set *devices) {

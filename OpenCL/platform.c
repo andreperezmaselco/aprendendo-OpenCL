@@ -29,7 +29,7 @@ void *getOpenCLPlatformInfo(cl_platform_id platform_id,
   return param_value;
 }
 
-void allocOpenCLPlatforms(Set *platforms) {
+void allocOpenCLPlatforms(Set *const platforms) {
   if (platforms == NULL) {
     return;
   }
@@ -42,7 +42,7 @@ void allocOpenCLPlatforms(Set *platforms) {
     return;
   }
 
-  cl_platform_id *platform_ids = calloc(num_platforms, sizeof(cl_platform_id));
+  cl_platform_id platform_ids[num_platforms];
   clGetPlatformIDs(num_platforms, platform_ids, NULL);
 
   platforms->cardinality = num_platforms;
@@ -58,11 +58,9 @@ void allocOpenCLPlatforms(Set *platforms) {
     platform->extensions = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_EXTENSIONS);
     allocOpenCLDevices(platform);
   }
-
-  free(platform_ids);
 }
 
-void freeOpenCLPlatforms(Set *platforms) {
+void freeOpenCLPlatforms(Set *const platforms) {
   if (platforms == NULL ||
       platforms->elements == NULL) {
     return;
@@ -79,9 +77,10 @@ void freeOpenCLPlatforms(Set *platforms) {
   }
 
   free(platforms->elements);
+  platforms->elements = NULL;
 }
 
-void printOpenCLInfo(Set *platforms) {
+void printOpenCLInfo(const Set *const platforms) {
   if (platforms == NULL ||
       platforms->elements == NULL) {
     puts("No OpenCL platforms allocated.");
@@ -110,19 +109,19 @@ void printOpenCLInfo(Set *platforms) {
       printf("        name: %s\n", device->name);
       printf("        vendor: %s\n", device->vendor);
       printf("        profile: %s\n", device->profile);
-      char *deviceType;
+      const char *deviceType;
       switch (device->type) {
         case CL_DEVICE_TYPE_DEFAULT:
-          deviceType = "DEFAULT";
+          deviceType = (const char []){"DEFAULT"};
           break;
         case CL_DEVICE_TYPE_CPU:
-          deviceType = "CPU";
+          deviceType = (const char []){"CPU"};
           break;
         case CL_DEVICE_TYPE_GPU:
-          deviceType = "GPU";
+          deviceType = (const char []){"GPU"};
           break;
         case CL_DEVICE_TYPE_ACCELERATOR:
-          deviceType = "ACCELERATOR";
+          deviceType = (const char []){"ACCELERATOR"};
           break;
         default:
           break;

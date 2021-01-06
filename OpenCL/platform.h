@@ -18,10 +18,10 @@ typedef struct OpenCLPlatform {
 void *getOpenCLPlatformInfo(cl_platform_id platform_id,
                             cl_platform_info platform_info);
 
-void allocOpenCLPlatforms(Set *platforms);
+void allocOpenCLPlatforms(Set *const platforms);
 
-void freeOpenCLPlatforms(Set *platforms);
+void freeOpenCLPlatforms(Set *const platforms);
 
-void printOpenCLInfo(Set *platforms);
+void printOpenCLInfo(const Set *const platforms);
 
 #endif
