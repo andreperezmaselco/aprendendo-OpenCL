@@ -2,7 +2,7 @@
 #include "OpenCL/platform.h"
 
 int main(void) {
-  Set platforms;
+  Set platforms = {0, NULL};
   allocOpenCLPlatforms(&platforms);
   printOpenCLInfo(&platforms);
   freeOpenCLPlatforms(&platforms);
