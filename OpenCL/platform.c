@@ -34,18 +34,16 @@ void allocOpenCLPlatforms(Set *const platforms) {
     return;
   }
 
-  cl_uint num_platforms;
-  clGetPlatformIDs(0, NULL, &num_platforms);
+  clGetPlatformIDs(0, NULL, (cl_uint *)&platforms->cardinality);
 
   // If there are no platforms, then return.
-  if (num_platforms == 0) {
+  if (platforms->cardinality == 0) {
     return;
   }
 
-  cl_platform_id platform_ids[num_platforms];
-  clGetPlatformIDs(num_platforms, platform_ids, NULL);
+  cl_platform_id platform_ids[platforms->cardinality];
+  clGetPlatformIDs(platforms->cardinality, platform_ids, NULL);
 
-  platforms->cardinality = num_platforms;
   platforms->elements = calloc(platforms->cardinality, sizeof(OpenCLPlatform));
 
   for (OpenCLPlatform *platform = platforms->elements;
