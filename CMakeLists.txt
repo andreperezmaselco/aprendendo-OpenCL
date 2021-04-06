@@ -2,7 +2,11 @@ cmake_minimum_required(VERSION 3.10)
 
 project(learning-OpenCL VERSION 1.0)
 
-add_executable(main main.c OpenCL/platform.c OpenCL/device.c)
+add_executable(main
+               main.c
+               arguments.c
+               OpenCL/platform.c
+               OpenCL/device.c)
 
 target_include_directories(main PUBLIC
                            ${PROJECT_SOURCE_DIR}
