@@ -7,22 +7,23 @@
 
 #include "mathematics/set.h"
 #include "OpenCL/device.h"
+#include "OpenCL/error.h"
 #include "OpenCL/platform.h"
 
 void *getOpenCLPlatformInfo(cl_platform_id platform_id,
                             cl_platform_info platform_info) {
   size_t param_value_size;
-  cl_int error = clGetPlatformInfo(platform_id, platform_info, 0, NULL, &param_value_size);
+  OpenCLError error = {clGetPlatformInfo(platform_id, platform_info, 0, NULL, &param_value_size)};
 
   // If 'clGetPlatformInfo' was not executed
   // successfully, then return.
-  if (error != CL_SUCCESS) {
+  if (error.code != CL_SUCCESS) {
     return NULL;
   }
 
   void *param_value = malloc(param_value_size);
-  error = clGetPlatformInfo(platform_id, platform_info, param_value_size, param_value, NULL);
-  if (error != CL_SUCCESS) {
+  error.code = clGetPlatformInfo(platform_id, platform_info, param_value_size, param_value, NULL);
+  if (error.code != CL_SUCCESS) {
     return NULL;
   }
 
@@ -34,21 +35,24 @@ void allocOpenCLPlatforms(Set *const platforms) {
     return;
   }
 
-  clGetPlatformIDs(0, NULL, (cl_uint *)&platforms->cardinality);
+  OpenCLError error = {clGetPlatformIDs(0, NULL, (cl_uint *)&platforms->cardinality)};
 
   // If there are no platforms, then return.
-  if (platforms->cardinality == 0) {
+  if (error.code != CL_SUCCESS || platforms->cardinality == 0) {
     return;
   }
 
   cl_platform_id platform_ids[platforms->cardinality];
-  clGetPlatformIDs(platforms->cardinality, platform_ids, NULL);
+  error.code = clGetPlatformIDs(platforms->cardinality, platform_ids, NULL);
+
+  if (error.code != CL_SUCCESS) {
+    return;
+  }
 
   platforms->elements = calloc(platforms->cardinality, sizeof(OpenCLPlatform));
 
-  for (OpenCLPlatform *platform = platforms->elements;
-       platform < (OpenCLPlatform *)platforms->elements + platforms->cardinality;
-       platform++) {
+  for (register uint8_t i = 0; i < platforms->cardinality; i++) {
+    OpenCLPlatform *platform = platforms->elements + i * sizeof(OpenCLPlatform);
     platform->id = platform_ids[platform - (OpenCLPlatform *)platforms->elements];
     platform->name = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_NAME);
     platform->vendor = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_VENDOR);
@@ -64,9 +68,8 @@ void freeOpenCLPlatforms(Set *const platforms) {
     return;
   }
 
-  for (OpenCLPlatform *platform = platforms->elements;
-       platform < (OpenCLPlatform *)platforms->elements + platforms->cardinality;
-       platform++) {
+  for (register uint8_t i = 0; i < platforms->cardinality; i++) {
+    OpenCLPlatform *platform = platforms->elements + i * sizeof(OpenCLPlatform);
     free(platform->name);
     free(platform->vendor);
     free(platform->profile);
@@ -75,6 +78,7 @@ void freeOpenCLPlatforms(Set *const platforms) {
   }
 
   free(platforms->elements);
+  platforms->cardinality = 0;
   platforms->elements = NULL;
 }
 
@@ -86,9 +90,8 @@ void printOpenCLInfo(const Set *const platforms) {
   }
 
   puts("OpenCL platforms:");
-  for (OpenCLPlatform *platform = platforms->elements;
-       platform < (OpenCLPlatform *)platforms->elements + platforms->cardinality;
-       platform++) {
+  for (register uint8_t i = 0; i < platforms->cardinality; i++) {
+    OpenCLPlatform *platform = platforms->elements + i * sizeof(OpenCLPlatform);
     printf("    name: %s\n", platform->name);
     printf("    vendor: %s\n", platform->vendor);
     printf("    profile: %s\n", platform->profile);
@@ -101,9 +104,8 @@ void printOpenCLInfo(const Set *const platforms) {
     }
 
     puts("    devices:");
-    for (OpenCLDevice *device = devices->elements;
-         device < (OpenCLDevice *)devices->elements + devices->cardinality;
-         device++) {
+    for (register uint8_t j = 0; j < devices->cardinality; j++) {
+      OpenCLDevice *device = devices->elements + j * sizeof(OpenCLDevice);
       printf("        name: %s\n", device->name);
       printf("        vendor: %s\n", device->vendor);
       printf("        profile: %s\n", device->profile);

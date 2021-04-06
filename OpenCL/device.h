@@ -18,8 +18,8 @@ typedef struct OpenCLDevice {
 void *getOpenCLDeviceInfo(cl_device_id device_id,
                           cl_device_info device_info);
 
-void allocOpenCLDevices(OpenCLPlatform *platform);
+void allocOpenCLDevices(OpenCLPlatform *const platform);
 
-void freeOpenCLDevices(Set *devices);
+void freeOpenCLDevices(Set *const devices);
 
 #endif

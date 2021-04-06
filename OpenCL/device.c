@@ -6,51 +6,52 @@
 
 #include "mathematics/set.h"
 #include "OpenCL/device.h"
+#include "OpenCL/error.h"
 #include "OpenCL/platform.h"
 
 void *getOpenCLDeviceInfo(cl_device_id device_id,
                           cl_device_info device_info) {
   size_t param_value_size;
-  cl_int error = clGetDeviceInfo(device_id, device_info, 0, NULL, &param_value_size);
-  if (error != CL_SUCCESS) {
+  OpenCLError error = {clGetDeviceInfo(device_id, device_info, 0, NULL, &param_value_size)};
+  if (error.code != CL_SUCCESS) {
     return NULL;
   }
 
   void *param_value = malloc(param_value_size);
-  error = clGetDeviceInfo(device_id, device_info, param_value_size, param_value, NULL);
-  if (error != CL_SUCCESS) {
+  error.code = clGetDeviceInfo(device_id, device_info, param_value_size, param_value, NULL);
+  if (error.code != CL_SUCCESS) {
     return NULL;
   }
 
   return param_value;
 }
 
-void allocOpenCLDevices(OpenCLPlatform *platform) {
+void allocOpenCLDevices(OpenCLPlatform *const platform) {
+  // If 'platform' is a null pointer, then return.
   if (platform == NULL) {
     return;
   }
 
-  cl_uint num_devices;
-  cl_int error = clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, 0, NULL, &num_devices);
+  OpenCLError error = {clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, 0, NULL, (cl_uint *)&platform->devices.cardinality)};
 
-  // If 'clGetDeviceIDs' was not executed successfully
+  // If 'clGetDeviceIDs' did not run successfully
   // or there are no devices, then return.
-  if (error != CL_SUCCESS ||
-      num_devices == 0) {
+  if (error.code != CL_SUCCESS || platform->devices.cardinality == 0) {
     return;
   }
 
-  cl_device_id device_ids[num_devices];
-  clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, num_devices, device_ids, NULL);
+  cl_device_id device_ids[platform->devices.cardinality];
+  error.code = clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, platform->devices.cardinality, device_ids, NULL);
 
-  Set *devices = &platform->devices;
-  devices->cardinality = num_devices;
-  devices->elements = calloc(devices->cardinality, sizeof(OpenCLDevice));
+  if (error.code != CL_SUCCESS) {
+    return;
+  }
 
-  for (OpenCLDevice *device = devices->elements;
-       device < (OpenCLDevice *)devices->elements + devices->cardinality;
-       device++) {
-    device->id = device_ids[device - (OpenCLDevice *)devices->elements];
+  platform->devices.elements = calloc(platform->devices.cardinality, sizeof(OpenCLDevice));
+
+  for (register uint8_t i = 0; i < platform->devices.cardinality; i++) {
+    OpenCLDevice *device = platform->devices.elements + i * sizeof(OpenCLDevice);
+    device->id = device_ids[i];
     device->name = getOpenCLDeviceInfo(device->id, CL_DEVICE_NAME);
     device->vendor = getOpenCLDeviceInfo(device->id, CL_DEVICE_VENDOR);
     device->profile = getOpenCLDeviceInfo(device->id, CL_DEVICE_PROFILE);
@@ -60,19 +61,20 @@ void allocOpenCLDevices(OpenCLPlatform *platform) {
   }
 }
 
-void freeOpenCLDevices(Set *devices) {
+void freeOpenCLDevices(Set *const devices) {
   if (devices == NULL ||
       devices->elements == NULL) {
     return;
   }
 
-  for (OpenCLDevice *device = devices->elements;
-       device < (OpenCLDevice *)devices->elements + devices->cardinality;
-       device++) {
+  for (register uint8_t i = 0; i < devices->cardinality; i++) {
+    OpenCLDevice *device = devices->elements + i * sizeof(OpenCLDevice);
     free(device->name);
     free(device->vendor);
     free(device->profile);
   }
 
   free(devices->elements);
+  devices->cardinality = 0;
+  devices->elements = NULL;
 }
