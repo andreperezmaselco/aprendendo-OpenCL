@@ -55,6 +55,7 @@ void allocOpenCLDevices(OpenCLPlatform *const platform) {
     device->name = getOpenCLDeviceInfo(device->id, CL_DEVICE_NAME);
     device->vendor = getOpenCLDeviceInfo(device->id, CL_DEVICE_VENDOR);
     device->profile = getOpenCLDeviceInfo(device->id, CL_DEVICE_PROFILE);
+    device->version = getOpenCLDeviceInfo(device->id, CL_DEVICE_VERSION);
     cl_device_type *device_type = getOpenCLDeviceInfo(device->id, CL_DEVICE_TYPE);
     device->type = *device_type;
     free(device_type);

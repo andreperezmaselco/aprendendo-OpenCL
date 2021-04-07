@@ -57,6 +57,7 @@ void allocOpenCLPlatforms(Set *const platforms) {
     platform->name = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_NAME);
     platform->vendor = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_VENDOR);
     platform->profile = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_PROFILE);
+    platform->version = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_VERSION);
     platform->extensions = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_EXTENSIONS);
     allocOpenCLDevices(platform);
   }
@@ -89,12 +90,13 @@ void printOpenCLPlatforms(const Set *const platforms) {
     return;
   }
 
-  puts("OpenCL platforms:");
+  puts("platforms:");
   for (register uint8_t i = 0; i < platforms->cardinality; i++) {
     OpenCLPlatform *platform = platforms->elements + i * sizeof(OpenCLPlatform);
     printf("    name: %s\n", platform->name);
     printf("    vendor: %s\n", platform->vendor);
     printf("    profile: %s\n", platform->profile);
+    printf("    version: %s\n", platform->version);
 
     Set *devices = &platform->devices;
     if (devices == NULL ||
@@ -109,6 +111,7 @@ void printOpenCLPlatforms(const Set *const platforms) {
       printf("        name: %s\n", device->name);
       printf("        vendor: %s\n", device->vendor);
       printf("        profile: %s\n", device->profile);
+      printf("        version: %s\n", device->version);
       const char *deviceType;
       switch (device->type) {
         case CL_DEVICE_TYPE_DEFAULT:
