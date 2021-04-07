@@ -20,6 +20,7 @@ void *getOpenCLDeviceInfo(cl_device_id device_id,
   void *param_value = malloc(param_value_size);
   error.code = clGetDeviceInfo(device_id, device_info, param_value_size, param_value, NULL);
   if (error.code != CL_SUCCESS) {
+    free(param_value);
     return NULL;
   }
 
@@ -63,8 +64,7 @@ void allocOpenCLDevices(OpenCLPlatform *const platform) {
 }
 
 void freeOpenCLDevices(Set *const devices) {
-  if (devices == NULL ||
-      devices->elements == NULL) {
+  if (devices == NULL || devices->elements == NULL) {
     return;
   }
 

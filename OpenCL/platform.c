@@ -24,6 +24,7 @@ void *getOpenCLPlatformInfo(cl_platform_id platform_id,
   void *param_value = malloc(param_value_size);
   error.code = clGetPlatformInfo(platform_id, platform_info, param_value_size, param_value, NULL);
   if (error.code != CL_SUCCESS) {
+    free(param_value);
     return NULL;
   }
 
