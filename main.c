@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
   // Allocate, print and free the platforms.
   Set platforms = {0, NULL};
   allocOpenCLPlatforms(&platforms);
-  printOpenCLInfo(&platforms);
+  printOpenCLPlatforms(&platforms);
   freeOpenCLPlatforms(&platforms);
   return 0;
 }

@@ -22,6 +22,6 @@ void allocOpenCLPlatforms(Set *const platforms);
 
 void freeOpenCLPlatforms(Set *const platforms);
 
-void printOpenCLInfo(const Set *const platforms);
+void printOpenCLPlatforms(const Set *const platforms);
 
 #endif

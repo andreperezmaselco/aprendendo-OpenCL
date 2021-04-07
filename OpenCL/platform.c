@@ -82,7 +82,7 @@ void freeOpenCLPlatforms(Set *const platforms) {
   platforms->elements = NULL;
 }
 
-void printOpenCLInfo(const Set *const platforms) {
+void printOpenCLPlatforms(const Set *const platforms) {
   if (platforms == NULL ||
       platforms->elements == NULL) {
     puts("No OpenCL platforms allocated.");
