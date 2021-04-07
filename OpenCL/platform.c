@@ -74,6 +74,7 @@ void freeOpenCLPlatforms(Set *const platforms) {
     free(platform->name);
     free(platform->vendor);
     free(platform->profile);
+    free(platform->version);
     free(platform->extensions);
     freeOpenCLDevices(&platform->devices);
   }

@@ -73,6 +73,7 @@ void freeOpenCLDevices(Set *const devices) {
     free(device->name);
     free(device->vendor);
     free(device->profile);
+    free(device->version);
   }
 
   free(devices->elements);
