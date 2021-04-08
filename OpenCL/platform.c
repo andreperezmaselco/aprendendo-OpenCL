@@ -12,17 +12,22 @@
 
 void *getOpenCLPlatformInfo(cl_platform_id platform_id,
                             cl_platform_info platform_info) {
+  // Try to get parameter value size.
   size_t param_value_size;
   OpenCLError error = {clGetPlatformInfo(platform_id, platform_info, 0, NULL, &param_value_size)};
 
-  // If 'clGetPlatformInfo' was not executed
-  // successfully, then return.
+  // If the parameter size was not returned,
+  // then return.
   if (error.code != CL_SUCCESS) {
     return NULL;
   }
 
+  // Try to get parameter value.
   void *param_value = malloc(param_value_size);
   error.code = clGetPlatformInfo(platform_id, platform_info, param_value_size, param_value, NULL);
+
+  // If the parameter value was not returned,
+  // then free 'param_value' and return.
   if (error.code != CL_SUCCESS) {
     free(param_value);
     return NULL;
@@ -54,7 +59,7 @@ void allocOpenCLPlatforms(Set *const platforms) {
 
   for (register uint8_t i = 0; i < platforms->cardinality; i++) {
     OpenCLPlatform *platform = platforms->elements + i * sizeof(OpenCLPlatform);
-    platform->id = platform_ids[platform - (OpenCLPlatform *)platforms->elements];
+    platform->id = platform_ids[i];
     platform->name = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_NAME);
     platform->vendor = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_VENDOR);
     platform->profile = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_PROFILE);
@@ -86,30 +91,27 @@ void freeOpenCLPlatforms(Set *const platforms) {
 }
 
 void printOpenCLPlatforms(const Set *const platforms) {
-  if (platforms == NULL ||
-      platforms->elements == NULL) {
-    puts("No OpenCL platforms allocated.");
+  if (platforms == NULL || platforms->elements == NULL) {
+    puts("platforms: null");
     return;
   }
 
   puts("platforms:");
   for (register uint8_t i = 0; i < platforms->cardinality; i++) {
-    OpenCLPlatform *platform = platforms->elements + i * sizeof(OpenCLPlatform);
+    const OpenCLPlatform *const platform = platforms->elements + i * sizeof(OpenCLPlatform);
     printf("    name: %s\n", platform->name);
     printf("    vendor: %s\n", platform->vendor);
     printf("    profile: %s\n", platform->profile);
     printf("    version: %s\n", platform->version);
 
-    Set *devices = &platform->devices;
-    if (devices == NULL ||
-        devices->elements == NULL) {
-      puts("    devices: (null)");
+    if (platform->devices.elements == NULL) {
+      puts("    devices: null");
       continue;
     }
 
     puts("    devices:");
-    for (register uint8_t j = 0; j < devices->cardinality; j++) {
-      OpenCLDevice *device = devices->elements + j * sizeof(OpenCLDevice);
+    for (register uint8_t j = 0; j < platform->devices.cardinality; j++) {
+      const OpenCLDevice *const device = platform->devices.elements + j * sizeof(OpenCLDevice);
       printf("        name: %s\n", device->name);
       printf("        vendor: %s\n", device->vendor);
       printf("        profile: %s\n", device->profile);
@@ -132,6 +134,8 @@ void printOpenCLPlatforms(const Set *const platforms) {
           break;
       }
       printf("        type: %s\n", deviceType);
+
+      // Add empty line between platforms.
     }
   }
 }
