@@ -1,8 +1,8 @@
 # Learning OpenCL
 
-![Linux workflow status badge](https://github.com/andreperezmaselco/learning-OpenCL/actions/workflows/linux.yml/badge.svg)
+[![Linux](https://github.com/andreperezmaselco/learning-OpenCL/actions/workflows/linux.yml/badge.svg)](https://github.com/andreperezmaselco/learning-OpenCL/actions/workflows/linux.yml)
 
-This is a project to learn [OpenCL specifications](https://www.khronos.org/registry/OpenCL). For now, it prints information about available OpenCL platforms and their devices.
+This is a project to learn [OpenCL specifications](https://www.khronos.org/registry/OpenCL). For now, it prints information about available OpenCL platforms on the running computer.
 
 ## Build
 
