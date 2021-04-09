@@ -1,10 +1,11 @@
-// C Library
+// Biblioteca padrão C
 #include <stdio.h>
 #include <stdlib.h>
 
 // OpenCL API
 #include <CL/cl.h>
 
+// Aprendendo OpenCL
 #include "mathematics/set.h"
 #include "OpenCL/device.h"
 #include "OpenCL/error.h"
@@ -12,22 +13,21 @@
 
 void *getOpenCLPlatformInfo(cl_platform_id platform_id,
                             cl_platform_info platform_info) {
-  // Try to get parameter value size.
+  // Tentar obter o tamanho do valor do parâmetro.
   size_t param_value_size;
   OpenCLError error = {clGetPlatformInfo(platform_id, platform_info, 0, NULL, &param_value_size)};
 
-  // If the parameter size was not returned,
-  // then return.
+  // Se o tamanho do valor do parâmetro não foi retornado, então retornar NULL.
   if (error.code != CL_SUCCESS) {
     return NULL;
   }
 
-  // Try to get parameter value.
+  // Tentar obter o valor do parâmetro.
   void *param_value = malloc(param_value_size);
   error.code = clGetPlatformInfo(platform_id, platform_info, param_value_size, param_value, NULL);
 
-  // If the parameter value was not returned,
-  // then free 'param_value' and return.
+  // Se o valor do parâmetro não foi retornado,
+  // então desalocar 'param_value' e retornar NULL.
   if (error.code != CL_SUCCESS) {
     free(param_value);
     return NULL;
@@ -37,17 +37,20 @@ void *getOpenCLPlatformInfo(cl_platform_id platform_id,
 }
 
 void allocOpenCLPlatforms(Set *const platforms) {
+  // Se 'platforms' for um ponteiro nulo, então retornar.
   if (platforms == NULL) {
     return;
   }
 
+  // Tentar obter a quantidade de plataformas.
   OpenCLError error = {clGetPlatformIDs(0, NULL, (cl_uint *)&platforms->cardinality)};
 
-  // If there are no platforms, then return.
+  // Se não houver plataformas, então retornar.
   if (error.code != CL_SUCCESS || platforms->cardinality == 0) {
     return;
   }
 
+  // Tentar obter os IDs das plataformas.
   cl_platform_id platform_ids[platforms->cardinality];
   error.code = clGetPlatformIDs(platforms->cardinality, platform_ids, NULL);
 
@@ -135,7 +138,7 @@ void printOpenCLPlatforms(const Set *const platforms) {
       }
       printf("        type: %s\n", deviceType);
 
-      // Add empty line between platforms.
+      // Adicione uma linha vazia entre as plataformas.
     }
   }
 }

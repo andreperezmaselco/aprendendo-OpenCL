@@ -4,6 +4,7 @@
 // OpenCL API
 #include <CL/cl.h>
 
+// Aprendendo OpenCL
 #include "mathematics/set.h"
 
 typedef struct OpenCLPlatform {

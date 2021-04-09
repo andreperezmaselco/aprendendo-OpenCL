@@ -5,10 +5,10 @@
 Arguments arguments;
 
 int main(int argc, char *argv[]) {
-  // Allocate the arguments.
+  // Alocar os argumentos.
   allocArguments(argc, argv);
 
-  // Allocate, print and free the platforms.
+  // Alocar, imprimir e desalocar as plataformas.
   Set platforms = {0, NULL};
   allocOpenCLPlatforms(&platforms);
   printOpenCLPlatforms(&platforms);

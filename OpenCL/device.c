@@ -1,9 +1,10 @@
-// C Library
+// Biblioteca padrão C
 #include <stdlib.h>
 
 // OpenCL API
 #include <CL/cl.h>
 
+// Aprendendo OpenCL
 #include "mathematics/set.h"
 #include "OpenCL/device.h"
 #include "OpenCL/error.h"
@@ -11,14 +12,21 @@
 
 void *getOpenCLDeviceInfo(cl_device_id device_id,
                           cl_device_info device_info) {
+  // Tentar obter o tamanho do valor do parâmetro.
   size_t param_value_size;
   OpenCLError error = {clGetDeviceInfo(device_id, device_info, 0, NULL, &param_value_size)};
+
+  // Se o tamanho do valor do parâmetro não foi retornado, então retornar NULL.
   if (error.code != CL_SUCCESS) {
     return NULL;
   }
 
+  // Tentar obter o valor do parâmetro.
   void *param_value = malloc(param_value_size);
   error.code = clGetDeviceInfo(device_id, device_info, param_value_size, param_value, NULL);
+
+  // Se o valor do parâmetro não foi retornado,
+  // então desalocar 'param_value' e retornar NULL.
   if (error.code != CL_SUCCESS) {
     free(param_value);
     return NULL;
@@ -28,19 +36,20 @@ void *getOpenCLDeviceInfo(cl_device_id device_id,
 }
 
 void allocOpenCLDevices(OpenCLPlatform *const platform) {
-  // If 'platform' is a null pointer, then return.
+  // Se 'platform' for um ponteiro nulo, então retornar.
   if (platform == NULL) {
     return;
   }
 
+  // Tentar obter a quantidade de dispositivos.
   OpenCLError error = {clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, 0, NULL, (cl_uint *)&platform->devices.cardinality)};
 
-  // If 'clGetDeviceIDs' did not run successfully
-  // or there are no devices, then return.
+  // Se não houver dispositivos, então retornar.
   if (error.code != CL_SUCCESS || platform->devices.cardinality == 0) {
     return;
   }
 
+  // Tentar obter os IDs dos dispositivos.
   cl_device_id device_ids[platform->devices.cardinality];
   error.code = clGetDeviceIDs(platform->id, CL_DEVICE_TYPE_ALL, platform->devices.cardinality, device_ids, NULL);
 
