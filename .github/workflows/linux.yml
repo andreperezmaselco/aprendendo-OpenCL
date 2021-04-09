@@ -25,23 +25,23 @@ jobs:
         cmake -D OPENCL_ICD_LOADER_HEADERS_DIR=dependencies/OpenCL-Headers -S dependencies/OpenCL-ICD-Loader -B dependencies/OpenCL-ICD-Loader/build
         cmake --build dependencies/OpenCL-ICD-Loader/build
 
-    - name: Create Build Environment
+    - name: Criar ambiente de compilação
       working-directory: ${{github.workspace}}
       run: |
         mkdir build
 
-    - name: Configure CMake
+    - name: Configurar CMake
       shell: bash
       working-directory: ${{github.workspace}}/build
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 
-    - name: Build
+    - name: Compilar
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
 
-    - name: Test
+    - name: Testar
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute tests defined by the CMake configuration.
