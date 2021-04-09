@@ -1,10 +1,10 @@
-# Learning OpenCL
+# Aprendendo OpenCL
 
 [![Linux](https://github.com/andreperezmaselco/learning-OpenCL/actions/workflows/linux.yml/badge.svg)](https://github.com/andreperezmaselco/learning-OpenCL/actions/workflows/linux.yml)
 
-This is a project to learn [OpenCL specifications](https://www.khronos.org/registry/OpenCL). For now, it prints information about the OpenCL platforms available on the running computer.
+Este é um projeto para aprender as [especificações OpenCL](https://www.khronos.org/registry/OpenCL). Por enquanto, o programa imprime informações sobre as plataformas OpenCL disponíveis no computador em execução.
 
-## Build
+## Compilar
 
 ```
 mkdir build && cd build
