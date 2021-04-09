@@ -1,3 +1,4 @@
+// Aprendendo OpenCL
 #include "arguments.h"
 #include "mathematics/set.h"
 #include "OpenCL/platform.h"

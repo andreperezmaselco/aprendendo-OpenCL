@@ -1,7 +1,7 @@
 #ifndef ARGUMENTS_H
 #define ARGUMENTS_H
 
-// C Library
+// Biblioteca C
 #include <stdint.h>
 
 typedef struct Arguments {

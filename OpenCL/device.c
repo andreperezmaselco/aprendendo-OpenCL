@@ -1,4 +1,4 @@
-// Biblioteca padrão C
+// Biblioteca C
 #include <stdlib.h>
 
 // OpenCL API

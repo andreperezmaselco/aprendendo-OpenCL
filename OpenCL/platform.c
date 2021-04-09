@@ -1,4 +1,4 @@
-// Biblioteca padrão C
+// Biblioteca C
 #include <stdio.h>
 #include <stdlib.h>
 

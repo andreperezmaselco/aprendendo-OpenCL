@@ -1,3 +1,4 @@
+// Aprendendo OpenCL
 #include "arguments.h"
 
 void allocArguments(int argc, char *argv[]) {
