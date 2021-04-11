@@ -75,8 +75,7 @@ void allocOpenCLPlatforms() {
 }
 
 void freeOpenCLPlatforms() {
-  if (platforms == NULL ||
-      platforms->elements == NULL) {
+  if (platforms == NULL || platforms->elements == NULL) {
     return;
   }
 

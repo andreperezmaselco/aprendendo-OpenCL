@@ -1,7 +1,7 @@
-// Biblioteca C
+// C
 #include <stdlib.h>
 
-// OpenCL API
+// OpenCL
 #include <CL/cl.h>
 
 // Aprendendo OpenCL

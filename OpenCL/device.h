@@ -1,7 +1,7 @@
 #ifndef OPENCL_DEVICE_H
 #define OPENCL_DEVICE_H
 
-// OpenCL API
+// OpenCL
 #include <CL/cl.h>
 
 // Aprendendo OpenCL
