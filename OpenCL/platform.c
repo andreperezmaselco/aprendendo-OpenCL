@@ -1,4 +1,4 @@
-// Biblioteca C
+// C
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,8 +11,10 @@
 #include "OpenCL/error.h"
 #include "OpenCL/platform.h"
 
-void *getOpenCLPlatformInfo(cl_platform_id platform_id,
-                            cl_platform_info platform_info) {
+static Set *platforms = NULL;
+
+static void *getOpenCLPlatformInfo(cl_platform_id platform_id,
+                                   cl_platform_info platform_info) {
   // Tentar obter o tamanho do valor do parâmetro.
   size_t param_value_size;
   OpenCLError error = {clGetPlatformInfo(platform_id, platform_info, 0, NULL, &param_value_size)};
@@ -36,10 +38,10 @@ void *getOpenCLPlatformInfo(cl_platform_id platform_id,
   return param_value;
 }
 
-void allocOpenCLPlatforms(Set *const platforms) {
+void allocOpenCLPlatforms() {
   // Se 'platforms' for um ponteiro nulo, então retornar.
   if (platforms == NULL) {
-    return;
+    platforms = malloc(sizeof(Set));
   }
 
   // Tentar obter a quantidade de plataformas.
@@ -72,7 +74,7 @@ void allocOpenCLPlatforms(Set *const platforms) {
   }
 }
 
-void freeOpenCLPlatforms(Set *const platforms) {
+void freeOpenCLPlatforms() {
   if (platforms == NULL ||
       platforms->elements == NULL) {
     return;
@@ -89,11 +91,11 @@ void freeOpenCLPlatforms(Set *const platforms) {
   }
 
   free(platforms->elements);
-  platforms->cardinality = 0;
-  platforms->elements = NULL;
+  free(platforms);
+  platforms = NULL;
 }
 
-void printOpenCLPlatforms(const Set *const platforms) {
+void printOpenCLPlatforms() {
   if (platforms == NULL || platforms->elements == NULL) {
     puts("platforms: null");
     return;
