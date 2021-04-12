@@ -5,7 +5,7 @@
 // Aprendendo OpenCL
 #include "arguments.h"
 
-static Arguments arguments = 0b0000111100111111;
+static uint16_t arguments = 0b0000111100111111;
 
 void parseArguments(int argc, char *argv[]) {
   // TODO

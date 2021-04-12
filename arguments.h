@@ -10,8 +10,6 @@
 #define ARGUMENT_PRINT_PLATFORM_PROFILE 2
 #define ARGUMENT_PRINT_PLATFORM_VERSION 3
 
-typedef uint16_t Arguments;
-
 void parseArguments(int argc, char *argv[]);
 
 uint8_t getArgument(uint8_t shift);
