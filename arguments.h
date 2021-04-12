@@ -10,6 +10,7 @@ typedef struct Arguments {
       uint8_t name : 1;
       uint8_t vendor : 1;
       uint8_t profile : 1;
+      uint8_t version : 1;
       uint8_t extensions : 1;
       uint8_t devices : 1;
     } platform;
@@ -18,6 +19,7 @@ typedef struct Arguments {
       uint8_t name : 1;
       uint8_t vendor : 1;
       uint8_t profile : 1;
+      uint8_t version : 1;
     } device;
   } print;
 } Arguments;
