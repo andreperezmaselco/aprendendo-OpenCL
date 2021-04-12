@@ -3,8 +3,8 @@
 #include "OpenCL/platform.h"
 
 int main(int argc, char *argv[]) {
-  // Alocar os argumentos.
-  allocArguments(argc, argv);
+  // Analisar os argumentos.
+  parseArguments(argc, argv);
 
   // Alocar, imprimir e desalocar as plataformas.
   allocOpenCLPlatforms();

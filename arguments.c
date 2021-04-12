@@ -7,7 +7,7 @@
 
 static Arguments arguments = 0b0000111100111111;
 
-void allocArguments(int argc, char *argv[]) {
+void parseArguments(int argc, char *argv[]) {
   // TODO
 }
 

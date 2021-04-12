@@ -12,7 +12,7 @@
 
 typedef uint16_t Arguments;
 
-void allocArguments(int argc, char *argv[]);
+void parseArguments(int argc, char *argv[]);
 
 uint8_t getArgument(uint8_t shift);
 
