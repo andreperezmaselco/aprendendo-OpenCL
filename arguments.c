@@ -5,17 +5,12 @@
 // Aprendendo OpenCL
 #include "arguments.h"
 
-static Arguments *arguments = NULL;
+static Arguments arguments = 0b0000111100111111;
 
 void allocArguments(int argc, char *argv[]) {
-  if (arguments == NULL && (arguments = malloc(sizeof(Arguments))) == NULL) {
-    return;
-  }
-
-  *(uint16_t *)arguments = 0b0000111100111111;
+  // TODO
 }
 
-void freeArguments() {
-  free(arguments);
-  arguments = NULL;
+uint8_t getArgument(uint8_t shift) {
+  return arguments >> shift & 1;
 }

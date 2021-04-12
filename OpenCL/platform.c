@@ -6,6 +6,7 @@
 #include <CL/cl.h>
 
 // Aprendendo OpenCL
+#include "arguments.h"
 #include "mathematics/set.h"
 #include "OpenCL/device.h"
 #include "OpenCL/error.h"
@@ -103,10 +104,22 @@ void printOpenCLPlatforms() {
   puts("platforms:");
   for (register uint8_t i = 0; i < platforms->cardinality; i++) {
     const OpenCLPlatform *const platform = platforms->elements + i * sizeof(OpenCLPlatform);
-    printf("    name: %s\n", platform->name);
-    printf("    vendor: %s\n", platform->vendor);
-    printf("    profile: %s\n", platform->profile);
-    printf("    version: %s\n", platform->version);
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_NAME)) {
+      printf("    name: %s\n", platform->name);
+    }
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_VENDOR)) {
+      printf("    vendor: %s\n", platform->vendor);
+    }
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_PROFILE)) {
+      printf("    profile: %s\n", platform->profile);
+    }
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_VERSION)) {
+      printf("    version: %s\n", platform->version);
+    }
 
     if (platform->devices.elements == NULL) {
       puts("    devices: null");
@@ -139,7 +152,7 @@ void printOpenCLPlatforms() {
       }
       printf("        type: %s\n", deviceType);
 
-      // Adicione uma linha vazia entre as plataformas.
+      // Adicionar linha vazia entre as plataformas.
     }
   }
 }

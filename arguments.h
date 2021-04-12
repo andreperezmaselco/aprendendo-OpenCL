@@ -4,28 +4,16 @@
 // C
 #include <stdint.h>
 
-typedef struct Arguments {
-  struct {
-    struct {
-      uint8_t name : 1;
-      uint8_t vendor : 1;
-      uint8_t profile : 1;
-      uint8_t version : 1;
-      uint8_t extensions : 1;
-      uint8_t devices : 1;
-    } platform;
+// Deslocamento dos argumentos
+#define ARGUMENT_PRINT_PLATFORM_NAME 0
+#define ARGUMENT_PRINT_PLATFORM_VENDOR 1
+#define ARGUMENT_PRINT_PLATFORM_PROFILE 2
+#define ARGUMENT_PRINT_PLATFORM_VERSION 3
 
-    struct {
-      uint8_t name : 1;
-      uint8_t vendor : 1;
-      uint8_t profile : 1;
-      uint8_t version : 1;
-    } device;
-  } print;
-} Arguments;
+typedef uint16_t Arguments;
 
 void allocArguments(int argc, char *argv[]);
 
-void freeArguments();
+uint8_t getArgument(uint8_t shift);
 
 #endif

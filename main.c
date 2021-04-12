@@ -11,8 +11,5 @@ int main(int argc, char *argv[]) {
   printOpenCLPlatforms();
   freeOpenCLPlatforms();
 
-  // Desalocar os argumentos.
-  freeArguments();
-
   return 0;
 }
