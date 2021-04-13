@@ -121,6 +121,10 @@ void printOpenCLPlatforms() {
       printf("    version: %s\n", platform->version);
     }
 
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_EXTENSIONS)) {
+      printf("    extensions: %s\n", platform->extensions);
+    }
+
     if (platform->devices.elements == NULL) {
       puts("    devices: null");
       continue;
@@ -129,28 +133,43 @@ void printOpenCLPlatforms() {
     puts("    devices:");
     for (register uint8_t j = 0; j < platform->devices.cardinality; j++) {
       const OpenCLDevice *const device = platform->devices.elements + j * sizeof(OpenCLDevice);
-      printf("        name: %s\n", device->name);
-      printf("        vendor: %s\n", device->vendor);
-      printf("        profile: %s\n", device->profile);
-      printf("        version: %s\n", device->version);
-      const char *deviceType;
-      switch (device->type) {
-        case CL_DEVICE_TYPE_DEFAULT:
-          deviceType = (const char []){"DEFAULT"};
-          break;
-        case CL_DEVICE_TYPE_CPU:
-          deviceType = (const char []){"CPU"};
-          break;
-        case CL_DEVICE_TYPE_GPU:
-          deviceType = (const char []){"GPU"};
-          break;
-        case CL_DEVICE_TYPE_ACCELERATOR:
-          deviceType = (const char []){"ACCELERATOR"};
-          break;
-        default:
-          break;
+
+      if (getArgument(ARGUMENT_PRINT_DEVICE_NAME)) {
+        printf("        name: %s\n", device->name);
       }
-      printf("        type: %s\n", deviceType);
+
+      if (getArgument(ARGUMENT_PRINT_DEVICE_VENDOR)) {
+        printf("        vendor: %s\n", device->vendor);
+      }
+
+      if (getArgument(ARGUMENT_PRINT_DEVICE_PROFILE)) {
+        printf("        profile: %s\n", device->profile);
+      }
+
+      if (getArgument(ARGUMENT_PRINT_DEVICE_VERSION)) {
+        printf("        version: %s\n", device->version);
+      }
+
+      if (getArgument(ARGUMENT_PRINT_DEVICE_TYPE)) {
+        const char *deviceType;
+        switch (device->type) {
+          case CL_DEVICE_TYPE_DEFAULT:
+            deviceType = (const char []){"DEFAULT"};
+            break;
+          case CL_DEVICE_TYPE_CPU:
+            deviceType = (const char []){"CPU"};
+            break;
+          case CL_DEVICE_TYPE_GPU:
+            deviceType = (const char []){"GPU"};
+            break;
+          case CL_DEVICE_TYPE_ACCELERATOR:
+            deviceType = (const char []){"ACCELERATOR"};
+            break;
+          default:
+            break;
+        }
+        printf("        type: %s\n", deviceType);
+      }
 
       // Adicionar linha vazia entre as plataformas.
     }
