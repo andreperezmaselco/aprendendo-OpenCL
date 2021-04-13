@@ -10,7 +10,7 @@ static uint16_t arguments = 0b0000011111101111;
 
 void parseArguments(const int argc, char *const argv[]) {
   for (register uint8_t i = 0; i < argc; i++) {
-    if (strcmp(argv[i], "--platform") == 0 && argv[i + 1] != NULL) {
+    if (strcmp(argv[i], "--platform") == 0 && argv[i + 1]) {
       arguments &= 0b0000011111000000;
       const char *token = strtok(argv[i + 1], ",");
       do {
@@ -27,8 +27,8 @@ void parseArguments(const int argc, char *const argv[]) {
         } else if (strcmp(token, "devices") == 0) {
           arguments |= 1 << ARGUMENT_PRINT_PLATFORM_DEVICES;
         }
-      } while ((token = strtok(NULL, ",")) != NULL);
-    } else if (strcmp(argv[i], "--device") == 0 && argv[i + 1] != NULL) {
+      } while (token = strtok(NULL, ","));
+    } else if (strcmp(argv[i], "--device") == 0 && argv[i + 1]) {
       arguments &= 0b0000000000111111;
       const char *token = strtok(argv[i + 1], ",");
       do {
@@ -43,7 +43,7 @@ void parseArguments(const int argc, char *const argv[]) {
         } else if (strcmp(token, "type") == 0) {
           arguments |= 1 << ARGUMENT_PRINT_DEVICE_TYPE;
         }
-      } while ((token = strtok(NULL, ",")) != NULL);
+      } while (token = strtok(NULL, ","));
     }
   }
 }
