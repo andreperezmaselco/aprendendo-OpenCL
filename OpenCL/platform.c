@@ -66,12 +66,30 @@ void allocOpenCLPlatforms() {
   for (register uint8_t i = 0; i < platforms->cardinality; i++) {
     OpenCLPlatform *platform = platforms->elements + i * sizeof(OpenCLPlatform);
     platform->id = platform_ids[i];
-    platform->name = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_NAME);
-    platform->vendor = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_VENDOR);
-    platform->profile = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_PROFILE);
-    platform->version = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_VERSION);
-    platform->extensions = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_EXTENSIONS);
-    allocOpenCLDevices(platform);
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_NAME)) {
+      platform->name = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_NAME);
+    }
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_VENDOR)) {
+      platform->vendor = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_VENDOR);
+    }
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_PROFILE)) {
+      platform->profile = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_PROFILE);
+    }
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_VERSION)) {
+      platform->version = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_VERSION);
+    }
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_EXTENSIONS)) {
+      platform->extensions = getOpenCLPlatformInfo(platform->id, CL_PLATFORM_EXTENSIONS);
+    }
+
+    if (getArgument(ARGUMENT_PRINT_PLATFORM_DEVICES)) {
+      allocOpenCLDevices(platform);
+    }
   }
 }
 
