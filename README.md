@@ -7,7 +7,7 @@ Este é um projeto para aprender as [especificações OpenCL](https://www.khrono
 ## Compilação
 
 ```
-mkdir build && cd build
-cmake ..
-cmake --build .
+mkdir build
+cmake -B build
+cmake --build build
 ```
