@@ -7,10 +7,10 @@
 
 // Aprendendo OpenCL
 #include "arguments.h"
-#include "mathematics/set.h"
-#include "OpenCL/device.h"
-#include "OpenCL/error.h"
-#include "OpenCL/platform.h"
+#include "set.h"
+#include "device.h"
+#include "error.h"
+#include "platform.h"
 
 static Set *platforms = NULL;
 

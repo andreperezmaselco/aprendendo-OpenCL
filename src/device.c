@@ -5,10 +5,10 @@
 #include <CL/cl.h>
 
 // Aprendendo OpenCL
-#include "mathematics/set.h"
-#include "OpenCL/device.h"
-#include "OpenCL/error.h"
-#include "OpenCL/platform.h"
+#include "set.h"
+#include "device.h"
+#include "error.h"
+#include "platform.h"
 
 void *getOpenCLDeviceInfo(cl_device_id device_id,
                           cl_device_info device_info) {

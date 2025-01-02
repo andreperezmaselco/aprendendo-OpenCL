@@ -5,8 +5,8 @@
 #include <CL/cl.h>
 
 // Aprendendo OpenCL
-#include "mathematics/set.h"
-#include "OpenCL/platform.h"
+#include "set.h"
+#include "platform.h"
 
 typedef struct OpenCLDevice {
   cl_device_id id;

@@ -1,6 +1,6 @@
 // Aprendendo OpenCL
 #include "arguments.h"
-#include "OpenCL/platform.h"
+#include "platform.h"
 
 int main(int argc, char *argv[]) {
   // Analisar os argumentos.

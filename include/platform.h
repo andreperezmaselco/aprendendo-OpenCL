@@ -5,7 +5,7 @@
 #include <CL/cl.h>
 
 // Aprendendo OpenCL
-#include "mathematics/set.h"
+#include "set.h"
 
 typedef struct OpenCLPlatform {
   cl_platform_id id;
