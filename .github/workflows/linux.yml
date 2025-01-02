@@ -2,41 +2,19 @@ name: Linux
 
 on: [push]
 
-env:
-  BUILD_TYPE: Release
-
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Clonar dependências
+    - name: Generate
       working-directory: ${{github.workspace}}
-      run: |
-        git clone https://github.com/KhronosGroup/OpenCL-Headers.git dependencies/OpenCL-Headers
-        git clone https://github.com/KhronosGroup/OpenCL-ICD-Loader.git dependencies/OpenCL-ICD-Loader
-
-    - name: Compilar dependências
-      working-directory: ${{github.workspace}}
-      run: |
-        mkdir dependencies/OpenCL-ICD-Loader/build
-        cmake -D OPENCL_ICD_LOADER_HEADERS_DIR=dependencies/OpenCL-Headers -S dependencies/OpenCL-ICD-Loader -B dependencies/OpenCL-ICD-Loader/build
-        cmake --build dependencies/OpenCL-ICD-Loader/build
-
-    - name: Criar ambiente de compilação
-      working-directory: ${{github.workspace}}
-      run: |
-        mkdir build
-        cmake -D CMAKE_BUILD_TYPE=$BUILD_TYPE -B build
-
-    - name: Compilar
-      working-directory: ${{github.workspace}}/build
       shell: bash
-      run: cmake --build . --config $BUILD_TYPE
+      run: cmake -B build -G Ninja
 
-    - name: Testar
-      working-directory: ${{github.workspace}}/build
+    - name: Build
+      working-directory: ${{github.workspace}}
       shell: bash
-      run: ctest -C $BUILD_TYPE
+      run: cmake --build build
