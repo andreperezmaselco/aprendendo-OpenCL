@@ -1,20 +1,19 @@
-# Aprendendo OpenCL
+# Learning OpenCL
 
 [![Linux](https://github.com/andreperezmaselco/learning-OpenCL/actions/workflows/linux.yml/badge.svg)](https://github.com/andreperezmaselco/learning-OpenCL/actions/workflows/linux.yml)
 
-Este é um projeto para aprender as [especificações OpenCL](https://www.khronos.org/registry/OpenCL). Por enquanto, o programa imprime informações sobre as plataformas OpenCL disponíveis no computador em execução.
+Project to learn the [OpenCL specifications](https://www.khronos.org/registry/OpenCL).
+For now, the program prints information about the OpenCL platforms available on the host.
 
-## Dependências
+## Dependencies
 
 ```
 git clone https://github.com/KhronosGroup/OpenCL-Headers.git dependencies/OpenCL-Headers
 git clone https://github.com/KhronosGroup/OpenCL-ICD-Loader.git dependencies/OpenCL-ICD-Loader
 ```
 
-## Compilação
+## Build
 
 ```
-mkdir build
-cmake -B build
-cmake --build build
+cmake -B build && cmake --build build
 ```
