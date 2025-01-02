@@ -7,14 +7,12 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Generate
       working-directory: ${{github.workspace}}
-      shell: bash
-      run: cmake -B build -G Ninja
+      run: cmake -B build
 
     - name: Build
       working-directory: ${{github.workspace}}
-      shell: bash
       run: cmake --build build
