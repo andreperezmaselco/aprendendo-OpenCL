@@ -1,7 +1,7 @@
 #ifndef OPENCL_ERROR_H
 #define OPENCL_ERROR_H
 
-// OpenCL API
+/* OpenCL API */
 #include <CL/cl.h>
 
 typedef struct OpenCLError {
