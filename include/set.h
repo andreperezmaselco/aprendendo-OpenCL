@@ -1,7 +1,7 @@
-#ifndef MATHEMATICS_SET_H
-#define MATHEMATICS_SET_H
+#ifndef SET_H
+#define SET_H
 
-// C Library
+/* C */
 #include <stddef.h>
 
 typedef struct Set {
