@@ -1,12 +1,12 @@
 #ifndef OPENCL_DEVICE_H
 #define OPENCL_DEVICE_H
 
-// OpenCL
+/* OpenCL */
 #include <CL/cl.h>
 
-// Aprendendo OpenCL
-#include "set.h"
+/* Learning OpenCL */
 #include "platform.h"
+#include "set.h"
 
 typedef struct OpenCLDevice {
   cl_device_id id;
