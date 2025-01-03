@@ -16,6 +16,6 @@ add_executable(main
                src/platform.c
                src/device.c)
 
-target_include_directories(main PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(main PRIVATE include)
 
-target_link_libraries(main PUBLIC OpenCL)
+target_link_libraries(main PRIVATE OpenCL)
