@@ -1,10 +1,10 @@
 #ifndef OPENCL_PLATFORM_H
 #define OPENCL_PLATFORM_H
 
-// OpenCL
+/* OpenCL */
 #include <CL/cl.h>
 
-// Aprendendo OpenCL
+/* Learning OpenCL */
 #include "set.h"
 
 typedef struct OpenCLPlatform {
@@ -17,10 +17,10 @@ typedef struct OpenCLPlatform {
   Set devices;
 } OpenCLPlatform;
 
-void allocOpenCLPlatforms();
+void allocOpenCLPlatforms(void);
 
-void freeOpenCLPlatforms();
+void freeOpenCLPlatforms(void);
 
-void printOpenCLPlatforms();
+void printOpenCLPlatforms(void);
 
 #endif
